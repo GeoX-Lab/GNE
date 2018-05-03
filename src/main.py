@@ -1,7 +1,5 @@
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from libs.struc2vec import struc2vec
-from gensim.models import Word2Vec
-from gensim.models.word2vec import LineSentence
 from libs.struc2vec import graph
 
 def parse_args():
@@ -59,61 +57,9 @@ def parse_args():
     return args
 
 
-def read_graph():
-    '''
-    Reads the input network.
-    '''
-    G = graph.load_edgelist(args.input, undirected=True)
-    return G
-
-
-def learn_embeddings():
-    '''
-    Learn embeddings by optimizing the Skipgram objective using SGD.
-    '''
-    walks = LineSentence('random_walks.txt')
-    model = Word2Vec(walks, size=args.dimensions, window=args.window_size, min_count=0, hs=1, sg=1,
-                     workers=args.workers, iter=args.iter)
-    model.wv.save_word2vec_format(args.output)
-
-    return
-
-
-def exec_struc2vec(args):
-    '''
-    Pipeline for representational learning for all nodes in a graph.
-    '''
-    if (args.OPT3):
-        until_layer = args.until_layer
-    else:
-        until_layer = None
-
-    G = read_graph()
-    G = struc2vec.Graph(G, args.directed, args.workers, untilLayer=until_layer)
-
-    if (args.OPT1):
-        G.preprocess_neighbors_with_bfs_compact()
-    else:
-        G.preprocess_neighbors_with_bfs()
-
-    if (args.OPT2):
-        G.create_vectors()
-        G.calc_distances(compactDegree=args.OPT1)
-    else:
-        G.calc_distances_all_vertices(compactDegree=args.OPT1)
-
-    G.create_distances_network()
-    G.preprocess_parameters_random_walk()
-
-    G.simulate_walks(args.num_walks, args.walk_length)
-
-    return G
-
-
 def main(args):
     if args.method == 'struc2vec':
-        G = exec_struc2vec(args)
-        learn_embeddings()
+        struc2vec.exec_struc2vec(args)
     elif args.method == 'node2vec':
         print "node2vec is comming soon..."
     elif args.method == 'deepwalk':

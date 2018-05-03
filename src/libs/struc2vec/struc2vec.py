@@ -6,6 +6,8 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from multiprocessing import Manager
 from time import time
 from collections import deque
+from gensim.models import Word2Vec
+from gensim.models.word2vec import LineSentence
 
 from utils import *
 from algorithms import *
@@ -233,6 +235,59 @@ class Graph():
 
 
 		return	
+
+
+def read_graph(args):
+    '''
+    Reads the input network.
+    '''
+    G = graph.load_edgelist(args.input, undirected=True)
+    return G
+
+
+def learn_embeddings(args):
+    '''
+    Learn embeddings by optimizing the Skipgram objective using SGD.
+    '''
+    walks = LineSentence('src\\libs\\struc2vec\\random_walks.txt')
+    model = Word2Vec(walks, size=args.dimensions, window=args.window_size, min_count=0, hs=1, sg=1,
+                     workers=args.workers, iter=args.iter)
+    model.wv.save_word2vec_format(args.output)
+
+    return
+
+
+def exec_struc2vec(args):
+    '''
+    Pipeline for representational learning for all nodes in a graph.
+    '''
+    if (args.OPT3):
+        until_layer = args.until_layer
+    else:
+        until_layer = None
+
+    G = read_graph(args)
+    G = Graph(G, args.directed, args.workers, untilLayer=until_layer)
+
+    if (args.OPT1):
+        G.preprocess_neighbors_with_bfs_compact()
+    else:
+        G.preprocess_neighbors_with_bfs()
+
+    if (args.OPT2):
+        G.create_vectors()
+        G.calc_distances(compactDegree=args.OPT1)
+    else:
+        G.calc_distances_all_vertices(compactDegree=args.OPT1)
+
+    G.create_distances_network()
+    G.preprocess_parameters_random_walk()
+
+    G.simulate_walks(args.num_walks, args.walk_length)
+
+    learn_embeddings(args)
+
+    return G
 
 
 
