@@ -1,6 +1,9 @@
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from libs.struc2vec import struc2vec
+from libs.node2vec import node2vec #node2vec
+from libs.graphwave import graphwave
 from libs.struc2vec import graph
+import networkx as nx #node2vec
 
 def parse_args():
     parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter,
@@ -53,6 +56,14 @@ def parse_args():
                       help='optimization 3')
     # struc2vec
 
+    #node2vec added
+    parser.add_argument('--p', type=float, default=0.04,
+                        help='Return hyperparameter. Default is 1.')
+
+    parser.add_argument('--q', type=float, default=1,
+                        help='Inout hyperparameter. Default is 1.')
+    # node2vec ended
+
     args = parser.parse_args()
     return args
 
@@ -61,13 +72,13 @@ def main(args):
     if args.method == 'struc2vec':
         struc2vec.exec_struc2vec(args)
     elif args.method == 'node2vec':
-        print "node2vec is comming soon..."
+        node2vec.exec_node2vec(args)
     elif args.method == 'deepwalk':
         print "deepwalk is comming soon..."
     elif args.method == 'line':
         print "line is comming soon..."
     elif args.method == 'graphwave':
-        print "grapgwave is comming soon..."
+        graphwave.exec_graphwave(args.input,args.output,args.dimensions,args.weighted)
 
 
 if __name__ == "__main__":

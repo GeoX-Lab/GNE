@@ -2,7 +2,6 @@
 
 This repository provides some methods for network embedding.Including node2vec,deepwalk,line,struc2vec,graphwave.
 
-**Note: Only struc2vec is supported now. Others are comming soon。**
 
 ## Requirements
 
@@ -13,6 +12,13 @@ pip install ***
 * futures
 * fastdtw
 * gensim
+* networkx
+* pandas
+* pygsp
+* pyemd
+* sklearn
+* seaborn
+* scipy
 
 ## Basic Usage
 
@@ -52,6 +58,8 @@ python src/main.py --help
 * --OPT1 Boolean   <br>        optimization 1 (default: False)
 * --OPT2 Boolean   <br>        optimization 2 (default: False)
 * --OPT3 Boolean   <br>        optimization 3 (default: False)
+* --p   <br>    Return hyperparameter. Default is 1.
+* --q   <br>    Inout hyperparameter. Default is 1.
 
 
 ### Example
