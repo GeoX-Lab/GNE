@@ -1,10 +1,10 @@
 # GNE: A toolkit for Network Embedding
 
-This repository provides some methods for network embedding.Including node2vec,deepwalk,line,struc2vec,graphwave.
+This repository provides some methods for network embedding.Including node2vec, struc2vec, graphwave, pca, mds, sc, ssc, svd_sc, isomap, lle, le, tsne
 
 
 ## Requirements
-
+#### 1.
 ```
 pip install ***
 ```
@@ -20,46 +20,217 @@ pip install ***
 * seaborn
 * scipy
 
+#### 2.
+
+install [**matlab engine for python**](http://ww2.mathworks.cn/help/matlab/matlab_external/install-the-matlab-engine-for-python.html)
+
 ## Basic Usage
 
 ### General Options
 
-You can check out all options by using:
+You can check out all details of parameters by using:
 
 ```
 python src/main.py --help
 ```
+### supported parameters
 
-* -h, --help    <br>        show this help message and exit
-* --method<br> {node2vec,deepWalk,line,struc2vec,graphwave}
-                        The learning method (default: None)
-* --input [INPUT]  <br>     Input graph path
-*  --output [OUTPUT]   <br>  Embeddings path
-* --dimensions DIMENSIONS
-                        <br>Number of dimensions. Default is 128. (default: 128)
-* --walk-length WALK_LENGTH<br>
-                        Length of walk per source. Default is 80. (default:
-                        80)
-* --num-walks NUM_WALKS<br>
-                        Number of walks per source. Default is 10. (default:
-                        10)
-* --window-size WINDOW_SIZE<br>
-                        Context size for optimization. Default is 10.
-                        (default: 10)
-* --until-layer UNTIL_LAYER<br>
-                        Calculation until the layer. (default: None)
-* --iter ITER           <br>Number of epochs in SGD (default: 5)
-* --workers WORKERS     <br>Number of parallel workers. Default is 8. (default: 4)
-* --weighted Boolean<br> specifying (un)weighted. Default is unweighted. (default: False)
-* --unweighted
-* --directed<br>            Graph is (un)directed. Default undirected.
-                        (default: False)
-* --undirected
-* --OPT1 Boolean   <br>        optimization 1 (default: False)
-* --OPT2 Boolean   <br>        optimization 2 (default: False)
-* --OPT3 Boolean   <br>        optimization 3 (default: False)
-* --p   <br>    Return hyperparameter. Default is 1.
-* --q   <br>    Inout hyperparameter. Default is 1.
+<table>
+<thead>
+<tr>
+<th>struc2vec</th>
+<th style="text-align:center">node2vec</th>
+<th style="text-align:right">graphwave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input</td>
+<td style="text-align:center">input</td>
+<td style="text-align:right">input</td>
+</tr>
+<tr>
+<td>output</td>
+<td style="text-align:center">output</td>
+<td style="text-align:right">output</td>
+</tr>
+<tr>
+<td>dimensions</td>
+<td style="text-align:center">dimensions</td>
+<td style="text-align:right">dimensions</td>
+</tr>
+<tr>
+<td>walk-length</td>
+<td style="text-align:center">walk-length</td>
+<td style="text-align:right">weighted</td>
+</tr>
+<tr>
+<td>num-walks</td>
+<td style="text-align:center">num-walks</td>
+<td style="text-align:right">unweighted</td>
+</tr>
+<tr>
+<td>window-size</td>
+<td style="text-align:center">window-size</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>until-layer</td>
+<td style="text-align:center">iter</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>iter</td>
+<td style="text-align:center">workers</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>workers</td>
+<td style="text-align:center">p</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>weighted</td>
+<td style="text-align:center">q</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>unweighted</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>directed</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>undirected</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>OPT1</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>OPT2</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>OPT3</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>PCA</th>
+<th style="text-align:center">MDS</th>
+<th style="text-align:right">Spectral Clustering</th>
+<th style="text-align:right">SSC</th>
+<th style="text-align:right">svd_sc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input1</td>
+<td style="text-align:center">input1</td>
+<td style="text-align:right">input1</td>
+<td style="text-align:right">input1</td>
+<td style="text-align:right">input1</td>
+</tr>
+<tr>
+<td>input2</td>
+<td style="text-align:center">input2</td>
+<td style="text-align:right">input2</td>
+<td style="text-align:right">input2</td>
+<td style="text-align:right">input2</td>
+</tr>
+<tr>
+<td>output</td>
+<td style="text-align:center">output</td>
+<td style="text-align:right">output</td>
+<td style="text-align:right">output</td>
+<td style="text-align:right">output</td>
+</tr>
+<tr>
+<td>dimensions</td>
+<td style="text-align:center">dimensions</td>
+<td style="text-align:right">dimensions</td>
+<td style="text-align:right">dimensions</td>
+<td style="text-align:right">dimensions</td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">distance</td>
+<td style="text-align:right">metric</td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td></td>
+<td style="text-align:center">criterion</td>
+<td style="text-align:right">lapmat</td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ISOMAP</th>
+<th style="text-align:center">LLE</th>
+<th style="text-align:right">LE</th>
+<th style="text-align:right">tsne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input1</td>
+<td style="text-align:center">input1</td>
+<td style="text-align:right">input1</td>
+<td style="text-align:right">input1</td>
+</tr>
+<tr>
+<td>input2</td>
+<td style="text-align:center">input2</td>
+<td style="text-align:right">input2</td>
+<td style="text-align:right">input2</td>
+</tr>
+<tr>
+<td>output</td>
+<td style="text-align:center">output</td>
+<td style="text-align:right">output</td>
+<td style="text-align:right">output</td>
+</tr>
+<tr>
+<td>dimensions</td>
+<td style="text-align:center">dimensions</td>
+<td style="text-align:right">dimensions</td>
+<td style="text-align:right">dimensions</td>
+</tr>
+<tr>
+<td>window-size</td>
+<td style="text-align:center">window-size</td>
+<td style="text-align:right">window-size</td>
+<td style="text-align:right">initial_dims</td>
+</tr>
+<tr>
+<td>distance</td>
+<td style="text-align:center"></td>
+<td style="text-align:right">sigma</td>
+<td style="text-align:right">perplexity</td>
+</tr>
+</tbody>
+</table>
+
+
 
 
 ### Example
@@ -76,6 +247,15 @@ The support input format is an edgelist:
 ```
 nodeX_int_id nodeY_int_id
 ```
+or
+```
+nodeX_int_id nodeY_int_id weight_float
+```
+
+### input1
+...
+### input2
+...
 
 ### output
 
@@ -92,3 +272,6 @@ nodeX_id dim1 dim2 dim3 ... dimd
 ```
 
 dim1 ... dimd is the d-dimensional representation
+
+## citing
+...
